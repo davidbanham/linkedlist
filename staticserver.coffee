@@ -1,6 +1,6 @@
 static_ = require("node-static")
 
-file = new static_.Server("./")
+file = new static_.Server()
 
 require("http").createServer((request, response) ->
   request.addListener("end", ->

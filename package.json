@@ -9,7 +9,6 @@
   "author": "david@banham.id.au",
   "license": "BSD",
   "dependencies": {
-    "coffee-script": "~1.6.3",
-    "connect": "~2.11.1"
+    "coffee-script": "~1.6.3"
   }
 }

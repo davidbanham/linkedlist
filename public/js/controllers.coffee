@@ -18,11 +18,11 @@ app.controller "ListCtrl", ($scope) ->
 
   push = ->
     db.compact (err, res) ->
-      Pouch.replicate "idb://#{currentShoppingList}", "https://davidbanham.iriscouch.com:6984/#{currentShoppingList}", (err, resp) ->
+      Pouch.replicate "idb://#{currentShoppingList}", "http://yankee.davidbanham.com:5984/#{currentShoppingList}", (err, resp) ->
         console.error err if err?
 
   pull = ->
-    Pouch.replicate "https://davidbanham.iriscouch.com:6984/#{currentShoppingList}", "idb://#{currentShoppingList}", (err, resp) ->
+    Pouch.replicate "http://yankee.davidbanham.com:5984/#{currentShoppingList}", "idb://#{currentShoppingList}", (err, resp) ->
       console.error "pull failed with", err if err?
       updateModel()
 

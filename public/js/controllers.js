@@ -28,7 +28,7 @@
     window.addEventListener('load', loadPouch, false);
     push = function() {
       return db.compact(function(err, res) {
-        return Pouch.replicate("idb://" + currentShoppingList, "https://davidbanham.iriscouch.com:6984/" + currentShoppingList, function(err, resp) {
+        return Pouch.replicate("idb://" + currentShoppingList, "http://yankee.davidbanham.com:5984/" + currentShoppingList, function(err, resp) {
           if (err != null) {
             return console.error(err);
           }
@@ -36,7 +36,7 @@
       });
     };
     pull = function() {
-      return Pouch.replicate("https://davidbanham.iriscouch.com:6984/" + currentShoppingList, "idb://" + currentShoppingList, function(err, resp) {
+      return Pouch.replicate("http://yankee.davidbanham.com:5984/" + currentShoppingList, "idb://" + currentShoppingList, function(err, resp) {
         if (err != null) {
           console.error("pull failed with", err);
         }

@@ -8,10 +8,10 @@ app.controller "ListCtrl", ($scope) ->
   items = {}
   $scope.shoppingList = items
 
-  loadPouch = ->
+  $scope.loadPouch = loadPouch = ->
     Pouch dbname, (err, pouchdb) ->
       alert "Can't open pouch database" if err?
-      db = pouchdb
+      $scope.db = db = pouchdb
       updateModel()
       pull()
   window.addEventListener 'load', loadPouch, false

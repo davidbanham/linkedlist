@@ -11,7 +11,7 @@ module.exports = (grunt) ->
     watch:
       scripts:
         files: 'public/js/src/**/*.coffee'
-        tasks: ['coffee:compile', 'coffee:tests']
+        tasks: ['coffee:compile', 'coffee:compile_tests']
         options:
           spawn: true
       tests:

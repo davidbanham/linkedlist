@@ -57,30 +57,15 @@
       return db.allDocs({
         include_docs: true
       }, function(err, res) {
-        var doc, found, id, row, _, _ref, _ref1;
+        var innerItems, row, _, _ref;
+        innerItems = {};
         if (err == null) {
           _ref = res.rows;
           for (_ in _ref) {
             row = _ref[_];
-            items[row.id] = row.doc;
+            innerItems[row.id] = row.doc;
           }
-          for (id in items) {
-            doc = items[id];
-            found = false;
-            _ref1 = res.rows;
-            for (_ in _ref1) {
-              row = _ref1[_];
-              if (found === true) {
-                continue;
-              }
-              if (row.id === id) {
-                found = true;
-              }
-            }
-            if (!found) {
-              delete items[id];
-            }
-          }
+          $scope.shoppingList = items = innerItems;
           return $scope.$apply();
         }
       });

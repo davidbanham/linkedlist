@@ -14,7 +14,8 @@ app.controller "ListCtrl", ($scope) ->
       $scope.db = db = pouchdb
       updateModel()
       pull()
-  window.addEventListener 'load', loadPouch, false
+
+  loadPouch()
 
   push = ->
     db.compact (err, res) ->

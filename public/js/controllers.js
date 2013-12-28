@@ -24,7 +24,7 @@
         return pull();
       });
     };
-    window.addEventListener('load', loadPouch, false);
+    loadPouch();
     push = function() {
       return db.compact(function(err, res) {
         $scope.loading = true;

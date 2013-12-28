@@ -40,6 +40,7 @@ app.controller "ListCtrl", ($scope) ->
         $scope.$apply()
 
   $scope.addItem = (item) ->
+    $scope.newItem = ''
     db.post {name: item}, (err, res) ->
       console.error err if err?
       updateModel()

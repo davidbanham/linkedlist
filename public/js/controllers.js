@@ -71,6 +71,7 @@
       });
     };
     $scope.addItem = function(item) {
+      $scope.newItem = '';
       return db.post({
         name: item
       }, function(err, res) {

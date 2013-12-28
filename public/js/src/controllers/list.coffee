@@ -58,3 +58,5 @@ app.controller "ListCtrl", ($scope) ->
           delete items[id]
           updateModel() if Object.keys(items).length is 0
           push() if Object.keys(items).length is 0
+
+  setTimeout updateModel, 10000

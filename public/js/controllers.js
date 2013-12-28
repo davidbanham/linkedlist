@@ -91,7 +91,7 @@
         return push();
       });
     };
-    return $scope.resetList = function() {
+    $scope.resetList = function() {
       var id, item, _results;
       _results = [];
       for (id in items) {
@@ -113,6 +113,7 @@
       }
       return _results;
     };
+    return setTimeout(updateModel, 10000);
   });
 
 }).call(this);

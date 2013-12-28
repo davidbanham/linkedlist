@@ -19,13 +19,13 @@ app.controller "ListCtrl", ($scope) ->
   push = ->
     db.compact (err, res) ->
       $scope.loading = true
-      db.replicate.to "http://yankee.davidbanham.com:5984/#{currentShoppingList}", {continuous: true, create_target: true}, (err, resp) ->
+      db.replicate.to "http://yankee.davidbanham.com:5984/#{currentShoppingList}", {continuous: true, create_target: true, onChange: updateModel}, (err, resp) ->
         $scope.loading = false
         console.error err if err?
 
   pull = ->
     $scope.loading = true
-    db.replicate.from "http://yankee.davidbanham.com:5984/#{currentShoppingList}", {continuous: true}, (err, resp) ->
+    db.replicate.from "http://yankee.davidbanham.com:5984/#{currentShoppingList}", {continuous: true, onChange: updateModel}, (err, resp) ->
       $scope.loading = false
       console.error "pull failed with", err if err?
       updateModel()

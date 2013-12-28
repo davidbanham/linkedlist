@@ -113,7 +113,9 @@
       }
       return _results;
     };
-    return setInterval(updateModel, 10000);
+    return setInterval(function() {
+      return updateModel();
+    }, 10000);
   });
 
 }).call(this);

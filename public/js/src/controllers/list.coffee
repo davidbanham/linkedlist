@@ -59,4 +59,6 @@ app.controller "ListCtrl", ($scope) ->
           updateModel() if Object.keys(items).length is 0
           push() if Object.keys(items).length is 0
 
-  setInterval updateModel, 10000
+  setInterval ->
+    updateModel()
+  , 10000

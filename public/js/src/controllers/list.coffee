@@ -19,13 +19,13 @@ app.controller "ListCtrl", ($scope) ->
   push = ->
     db.compact (err, res) ->
       $scope.loading = true
-      db.replicate.to "http://yankee.davidbanham.com:5984/#{currentShoppingList}", {continuous: true, create_target: true, onChange: updateModel, complete: updateModel}, (err, resp) ->
+      db.replicate.to "http://yankee.davidbanham.com:5984/#{currentShoppingList}", {continuous: true, create_target: true, onChange: updateModel}, (err, resp) ->
         $scope.loading = false
         console.error err if err?
 
   pull = ->
     $scope.loading = true
-    db.replicate.from "http://yankee.davidbanham.com:5984/#{currentShoppingList}", {continuous: true, onChange: updateModel, complete: updateModel}, (err, resp) ->
+    db.replicate.from "http://yankee.davidbanham.com:5984/#{currentShoppingList}", {continuous: true, onChange: updateModel}, (err, resp) ->
       $scope.loading = false
       console.error "pull failed with", err if err?
       updateModel()
@@ -33,6 +33,7 @@ app.controller "ListCtrl", ($scope) ->
   updateModel = ->
     db.allDocs {include_docs: true}, (err, res) ->
       unless err?
+        items = {}
         for id, row of res.rows
           items[row.id] = row.doc
         $scope.$apply()
@@ -58,7 +59,3 @@ app.controller "ListCtrl", ($scope) ->
           delete items[id]
           updateModel() if Object.keys(items).length is 0
           push() if Object.keys(items).length is 0
-
-  setInterval ->
-    updateModel()
-  , 10000

@@ -31,8 +31,7 @@
         return db.replicate.to("http://yankee.davidbanham.com:5984/" + currentShoppingList, {
           continuous: true,
           create_target: true,
-          onChange: updateModel,
-          complete: updateModel
+          onChange: updateModel
         }, function(err, resp) {
           $scope.loading = false;
           if (err != null) {
@@ -45,8 +44,7 @@
       $scope.loading = true;
       return db.replicate.from("http://yankee.davidbanham.com:5984/" + currentShoppingList, {
         continuous: true,
-        onChange: updateModel,
-        complete: updateModel
+        onChange: updateModel
       }, function(err, resp) {
         $scope.loading = false;
         if (err != null) {
@@ -61,6 +59,7 @@
       }, function(err, res) {
         var id, row, _ref;
         if (err == null) {
+          items = {};
           _ref = res.rows;
           for (id in _ref) {
             row = _ref[id];
@@ -91,7 +90,7 @@
         return push();
       });
     };
-    $scope.resetList = function() {
+    return $scope.resetList = function() {
       var id, item, _results;
       _results = [];
       for (id in items) {
@@ -113,9 +112,6 @@
       }
       return _results;
     };
-    return setInterval(function() {
-      return updateModel();
-    }, 10000);
   });
 
 }).call(this);

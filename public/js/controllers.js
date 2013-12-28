@@ -113,7 +113,7 @@
       }
       return _results;
     };
-    return setTimeout(updateModel, 10000);
+    return setInterval(updateModel, 10000);
   });
 
 }).call(this);

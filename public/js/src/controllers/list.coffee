@@ -33,9 +33,14 @@ app.controller "ListCtrl", ($scope) ->
   updateModel = ->
     db.allDocs {include_docs: true}, (err, res) ->
       unless err?
-        items = {}
-        for id, row of res.rows
+        for _, row of res.rows
           items[row.id] = row.doc
+        for id, doc of items
+          found = false
+          for _, row of res.rows
+            continue if found is true
+            found = true if row.id is id
+          delete items[id] unless found
         $scope.$apply()
 
   $scope.addItem = (item) ->

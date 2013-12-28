@@ -57,13 +57,29 @@
       return db.allDocs({
         include_docs: true
       }, function(err, res) {
-        var id, row, _ref;
+        var doc, found, id, row, _, _ref, _ref1;
         if (err == null) {
-          items = {};
           _ref = res.rows;
-          for (id in _ref) {
-            row = _ref[id];
+          for (_ in _ref) {
+            row = _ref[_];
             items[row.id] = row.doc;
+          }
+          for (id in items) {
+            doc = items[id];
+            found = false;
+            _ref1 = res.rows;
+            for (_ in _ref1) {
+              row = _ref1[_];
+              if (found === true) {
+                continue;
+              }
+              if (row.id === id) {
+                found = true;
+              }
+            }
+            if (!found) {
+              delete items[id];
+            }
           }
           return $scope.$apply();
         }

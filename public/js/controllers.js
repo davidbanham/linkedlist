@@ -31,7 +31,8 @@
         return db.replicate.to("http://yankee.davidbanham.com:5984/" + currentShoppingList, {
           continuous: true,
           create_target: true,
-          onChange: updateModel
+          onChange: updateModel,
+          complete: updateModel
         }, function(err, resp) {
           $scope.loading = false;
           if (err != null) {
@@ -44,7 +45,8 @@
       $scope.loading = true;
       return db.replicate.from("http://yankee.davidbanham.com:5984/" + currentShoppingList, {
         continuous: true,
-        onChange: updateModel
+        onChange: updateModel,
+        complete: updateModel
       }, function(err, resp) {
         $scope.loading = false;
         if (err != null) {

@@ -5,6 +5,7 @@
     <title>Linked List</title>
     <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -36,9 +37,11 @@
         <input ng-model="newItem"></input>
         <button type="submit">Add</button>
       </form>
-      <li ng-repeat="item in shoppingList">
-        <span ng-click="deleteItem(item)">{{item.name}}</span>
-      </li>
+      <ul class="crosslist">
+        <li ng-repeat="item in shoppingList">
+          <span ng-click="deleteItem(item)">✗ {{item.name}}</span>
+        </li>
+      </ul>
       <button ng-click="resetList()" style="margin-top: 20px;">Make it all go away!</button>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>

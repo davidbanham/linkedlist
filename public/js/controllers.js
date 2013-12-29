@@ -15,14 +15,9 @@
     items = {};
     $scope.shoppingList = items;
     $scope.loadPouch = loadPouch = function() {
-      return Pouch(dbname, function(err, pouchdb) {
-        if (err != null) {
-          alert("Can't open pouch database");
-        }
-        $scope.db = db = pouchdb;
-        updateModel();
-        return pull();
-      });
+      db = new PouchDB(dbname);
+      updateModel();
+      return pull();
     };
     loadPouch();
     push = function() {

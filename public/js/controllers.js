@@ -1,26 +1,29 @@
 (function() {
-  var app, currentShoppingList, db;
-
-  currentShoppingList = 'shoppinglist';
+  var app, db;
 
   app = angular.module('CoffeeModule');
 
   db = null;
 
-  app.controller("ListCtrl", function($scope, $route) {
-    var items, loadPouch, pull, push, updateModel;
-    $scope.currentShoppingList = currentShoppingList;
+  app.controller("ListCtrl", function($scope) {
+    var chooseDb, currentListName, items, loadPouch, pull, push, updateModel;
+    currentListName = null;
+    chooseDb = function() {
+      return $scope.currentListName = currentListName = window.location.hash.split('#/')[1] || 'supermarket';
+    };
+    chooseDb();
+    $scope.currentListName = currentListName;
     items = {};
-    $scope.shoppingList = items;
+    $scope.items = items;
     $scope.loadPouch = loadPouch = function() {
-      db = new PouchDB(currentShoppingList);
+      db = new PouchDB(currentListName);
       updateModel();
       return pull();
     };
     push = function() {
       return db.compact(function(err, res) {
         $scope.loading = true;
-        return db.replicate.to("http://yankee.davidbanham.com:5984/" + currentShoppingList, {
+        return db.replicate.to("http://yankee.davidbanham.com:5984/" + currentListName, {
           continuous: true,
           create_target: true,
           onChange: updateModel
@@ -34,7 +37,7 @@
     };
     pull = function() {
       $scope.loading = true;
-      return db.replicate.from("http://yankee.davidbanham.com:5984/" + currentShoppingList, {
+      return db.replicate.from("http://yankee.davidbanham.com:5984/" + currentListName, {
         continuous: true,
         onChange: updateModel
       }, function(err, resp) {
@@ -57,7 +60,7 @@
             row = _ref[_];
             innerItems[row.id] = row.doc;
           }
-          $scope.shoppingList = items = innerItems;
+          $scope.items = items = innerItems;
           return $scope.$apply();
         }
       });
@@ -106,7 +109,12 @@
       }
       return _results;
     };
-    return loadPouch();
+    loadPouch();
+    return window.onhashchange = function() {
+      chooseDb();
+      loadPouch();
+      return $scope.$apply();
+    };
   });
 
 }).call(this);

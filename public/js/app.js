@@ -1,1 +1,1 @@
-angular.module('CoffeeModule', ['ngRoute']);
+angular.module('CoffeeModule', [])

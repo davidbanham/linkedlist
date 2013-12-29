@@ -1,0 +1,15 @@
+CACHE MANIFEST
+# Sun 29 Dec 2013
+
+CACHE:
+index.html
+lib/bootstrap/dist/css/bootstrap-theme.min.css
+lib/bootstrap/dist/css/bootstrap.min.css
+css/custom.css
+lib/angular/angular.min.js
+js/app.js
+js/controllers.js
+js/pouchdb-nightly.min.js
+
+NETWORK:
+*

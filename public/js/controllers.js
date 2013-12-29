@@ -1,5 +1,5 @@
 (function() {
-  var app, currentShoppingList, db, dbname;
+  var app, currentShoppingList, db;
 
   currentShoppingList = 'shoppinglist';
 
@@ -7,15 +7,13 @@
 
   db = null;
 
-  dbname = "idb://" + currentShoppingList;
-
   app.controller("ListCtrl", function($scope) {
     var items, loadPouch, pull, push, updateModel;
     $scope.currentShoppingList = currentShoppingList;
     items = {};
     $scope.shoppingList = items;
     $scope.loadPouch = loadPouch = function() {
-      db = new PouchDB(dbname);
+      db = new PouchDB(currentShoppingList);
       updateModel();
       return pull();
     };

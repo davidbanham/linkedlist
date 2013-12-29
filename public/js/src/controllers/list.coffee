@@ -1,7 +1,6 @@
 currentShoppingList = 'shoppinglist'
 app = angular.module('CoffeeModule')
 db = null
-dbname = "idb://#{currentShoppingList}"
 
 app.controller "ListCtrl", ($scope) ->
   $scope.currentShoppingList = currentShoppingList
@@ -9,7 +8,7 @@ app.controller "ListCtrl", ($scope) ->
   $scope.shoppingList = items
 
   $scope.loadPouch = loadPouch = ->
-    db = new PouchDB dbname
+    db = new PouchDB currentShoppingList
     updateModel()
     pull()
 

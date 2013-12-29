@@ -7,7 +7,7 @@
 
   db = null;
 
-  app.controller("ListCtrl", function($scope) {
+  app.controller("ListCtrl", function($scope, $route) {
     var items, loadPouch, pull, push, updateModel;
     $scope.currentShoppingList = currentShoppingList;
     items = {};

@@ -2,7 +2,7 @@ currentShoppingList = 'shoppinglist'
 app = angular.module('CoffeeModule')
 db = null
 
-app.controller "ListCtrl", ($scope) ->
+app.controller "ListCtrl", ($scope, $route) ->
   $scope.currentShoppingList = currentShoppingList
   items = {}
   $scope.shoppingList = items

@@ -13,8 +13,6 @@ app.controller "ListCtrl", ($scope) ->
     updateModel()
     pull()
 
-  loadPouch()
-
   push = ->
     db.compact (err, res) ->
       $scope.loading = true
@@ -60,3 +58,5 @@ app.controller "ListCtrl", ($scope) ->
           delete items[id]
           updateModel() if Object.keys(items).length is 0
           push() if Object.keys(items).length is 0
+
+  loadPouch()

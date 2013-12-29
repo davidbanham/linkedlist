@@ -19,7 +19,6 @@
       updateModel();
       return pull();
     };
-    loadPouch();
     push = function() {
       return db.compact(function(err, res) {
         $scope.loading = true;
@@ -87,7 +86,7 @@
         return push();
       });
     };
-    return $scope.resetList = function() {
+    $scope.resetList = function() {
       var id, item, _results;
       _results = [];
       for (id in items) {
@@ -109,6 +108,7 @@
       }
       return _results;
     };
+    return loadPouch();
   });
 
 }).call(this);

@@ -70,3 +70,8 @@ app.controller "ListCtrl", ($scope) ->
     chooseDb()
     loadPouch()
     $scope.$apply()
+
+  window.addEventListener 'online', ->
+    console.log 'back online'
+    pull()
+    push()

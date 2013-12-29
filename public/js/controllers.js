@@ -110,11 +110,16 @@
       return _results;
     };
     loadPouch();
-    return window.onhashchange = function() {
+    window.onhashchange = function() {
       chooseDb();
       loadPouch();
       return $scope.$apply();
     };
+    return window.addEventListener('online', function() {
+      console.log('back online');
+      pull();
+      return push();
+    });
   });
 
 }).call(this);

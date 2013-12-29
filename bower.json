@@ -15,8 +15,7 @@
   "dependencies": {
     "angular": "~1.2.6",
     "bootstrap": "~3.0.3",
-    "angular-mocks": "~1.2.6",
-    "angular-route": "~1.2.6"
+    "angular-mocks": "~1.2.6"
   },
   "resolutions": {
     "angular": "~1.2.6"

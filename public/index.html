@@ -32,17 +32,27 @@
     </div>
   </div>
     <div class="container" ng-controller="ListCtrl">
-      <h3>{{currentShoppingList}}</h3>
-      <form ng-submit="addItem(newItem)">
-        <input ng-model="newItem"></input>
-        <button type="submit">Add</button>
-      </form>
-      <ul class="crosslist">
-        <li ng-repeat="item in shoppingList">
-          <span ng-click="deleteItem(item)">✗ {{item.name}}</span>
-        </li>
-      </ul>
-      <button ng-click="resetList()" style="margin-top: 20px;">Make it all go away!</button>
+      <div class="row">
+        <div class="col-md-6">
+          <h3>{{currentShoppingList}}</h3>
+        </div>
+        <div class="col-md-6">
+          <form ng-submit="addItem(newItem)">
+            <input ng-model="newItem"></input>
+            <button type="submit">Add</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <div class="row">
+        <ul class="crosslist">
+          <li ng-repeat="item in shoppingList">
+            <div class="col-md-4 panel panel-default" style="margin-right: 14px" ng-click="deleteItem(item)">
+              <span>✗ {{item.name}}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/lib/angular/angular.min.js"></script>

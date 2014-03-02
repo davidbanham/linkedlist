@@ -10,7 +10,6 @@ app.directive 'contenteditable', ->
       element.html ngModel.$viewValue or ''
 
       element.on 'blur keyup change', ->
-        console.log 'wat'
         scope.$apply read
 
       read = ->

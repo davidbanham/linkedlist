@@ -15,7 +15,6 @@
           var read;
           element.html(ngModel.$viewValue || '');
           element.on('blur keyup change', function() {
-            console.log('wat');
             return scope.$apply(read);
           });
           read = function() {

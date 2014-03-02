@@ -38,10 +38,15 @@ app.controller "ListCtrl", ($scope) ->
 
   push = ->
     db.compact (err, res) ->
-      db.replicate.to "http://yankee.davidbanham.com:5984/#{currentListName}", {continuous: true, create_target: true, onChange: updateModel}
+      db.replicate.to "http://yankee.davidbanham.com:5984/#{currentListName}",
+        continuous: true
+        create_target: true
+        onChange: updateModel
 
   pull = ->
-    db.replicate.from "http://yankee.davidbanham.com:5984/#{currentListName}", {continuous: true, onChange: updateModel}
+    db.replicate.from "http://yankee.davidbanham.com:5984/#{currentListName}",
+      continuous: true
+      onChange: updateModel
 
   updateModel = ->
     db.allDocs {include_docs: true}, (err, res) ->

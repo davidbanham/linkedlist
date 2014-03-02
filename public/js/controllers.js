@@ -85,16 +85,23 @@
       });
     };
     $scope.addItem = function(item) {
+      var elem, _i, _len, _ref, _results;
       $scope.newItem = '';
-      return db.post({
-        name: item
-      }, function(err, res) {
-        if (err != null) {
-          console.error(err);
-        }
-        updateModel();
-        return push();
-      });
+      _ref = item.split(',');
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        elem = _ref[_i];
+        _results.push(db.post({
+          name: elem
+        }, function(err, res) {
+          if (err != null) {
+            console.error(err);
+          }
+          updateModel();
+          return push();
+        }));
+      }
+      return _results;
     };
     $scope.deleteItem = function(item) {
       return db.remove(item, function(err, res) {

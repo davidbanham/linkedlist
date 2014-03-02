@@ -61,10 +61,11 @@ app.controller "ListCtrl", ($scope) ->
 
   $scope.addItem = (item) ->
     $scope.newItem = ''
-    db.post {name: item}, (err, res) ->
-      console.error err if err?
-      updateModel()
-      push()
+    for elem in item.split ','
+      db.post {name: elem}, (err, res) ->
+        console.error err if err?
+        updateModel()
+        push()
 
   $scope.deleteItem = (item) ->
     db.remove item, (err, res) ->

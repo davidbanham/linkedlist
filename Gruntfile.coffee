@@ -5,6 +5,7 @@ module.exports = (grunt) ->
       compile:
         files:
           'public/js/controllers.js': ['public/js/src/controllers/*.coffee']
+          'public/js/directives.js': ['public/js/src/directives/*.coffee']
       compile_tests:
         files:
           'public/js/test_controllers.js': ['public/js/test/controllers/*.coffee']

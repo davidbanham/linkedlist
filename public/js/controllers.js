@@ -3,15 +3,34 @@
 
   app = angular.module('CoffeeModule');
 
-  db = null;
+  db = 'supermarket';
 
   app.controller("ListCtrl", function($scope) {
-    var chooseDb, currentListName, items, loadPouch, pull, push, updateModel;
-    currentListName = null;
-    chooseDb = function() {
-      return $scope.currentListName = currentListName = window.location.hash.split('#/')[1] || 'supermarket';
+    var checkHash, chooseDb, currentListName, debounce, items, loadPouch, pull, push, updateHash, updateModel;
+    currentListName = 'supermarket';
+    $scope.chooseDb = chooseDb = function(name) {
+      $scope.currentListName = currentListName = name;
+      return updateHash(name);
     };
-    chooseDb();
+    updateHash = function(name) {
+      return window.location.hash = "#/" + currentListName;
+    };
+    debounce = null;
+    $scope.$watch('currentListName', function(newVal, oldVal) {
+      clearTimeout(debounce);
+      return debounce = setTimeout(function() {
+        return chooseDb(newVal);
+      }, 500);
+    });
+    checkHash = function() {
+      var targetName;
+      targetName = window.location.hash.split('#/')[1];
+      if (targetName === void 0) {
+        targetName = 'supermarket';
+      }
+      return chooseDb(targetName);
+    };
+    checkHash();
     $scope.currentListName = currentListName;
     items = {};
     $scope.items = items;
@@ -111,7 +130,7 @@
     };
     loadPouch();
     window.onhashchange = function() {
-      chooseDb();
+      checkHash();
       loadPouch();
       return $scope.$apply();
     };

@@ -1,13 +1,31 @@
 app = angular.module('CoffeeModule')
-db = null
+db = 'supermarket'
 
 app.controller "ListCtrl", ($scope) ->
-  currentListName = null
+  currentListName = 'supermarket'
 
-  chooseDb = ->
-    $scope.currentListName = currentListName = window.location.hash.split('#/')[1] or 'supermarket'
+  $scope.chooseDb = chooseDb = (name) ->
+    $scope.currentListName = currentListName = name
+    updateHash(name)
 
-  chooseDb()
+  updateHash = (name) ->
+    window.location.hash = "#/#{currentListName}"
+
+  debounce = null
+
+  $scope.$watch 'currentListName', (newVal, oldVal) ->
+    clearTimeout debounce
+    debounce = setTimeout ->
+      chooseDb newVal
+    , 500
+
+  checkHash = ->
+    targetName = window.location.hash.split('#/')[1]
+    if targetName is undefined
+      targetName = 'supermarket'
+    chooseDb(targetName)
+
+  checkHash()
 
   $scope.currentListName = currentListName
   items = {}
@@ -67,7 +85,7 @@ app.controller "ListCtrl", ($scope) ->
   loadPouch()
 
   window.onhashchange = ->
-    chooseDb()
+    checkHash()
     loadPouch()
     $scope.$apply()
 

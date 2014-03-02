@@ -41,30 +41,17 @@
     };
     push = function() {
       return db.compact(function(err, res) {
-        $scope.loading = true;
         return db.replicate.to("http://yankee.davidbanham.com:5984/" + currentListName, {
           continuous: true,
           create_target: true,
           onChange: updateModel
-        }, function(err, resp) {
-          $scope.loading = false;
-          if (err != null) {
-            return console.error(err);
-          }
         });
       });
     };
     pull = function() {
-      $scope.loading = true;
       return db.replicate.from("http://yankee.davidbanham.com:5984/" + currentListName, {
         continuous: true,
         onChange: updateModel
-      }, function(err, resp) {
-        $scope.loading = false;
-        if (err != null) {
-          console.error("pull failed with", err);
-        }
-        return updateModel();
       });
     };
     updateModel = function() {

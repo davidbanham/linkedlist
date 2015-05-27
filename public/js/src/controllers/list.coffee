@@ -34,19 +34,22 @@ app.controller "ListCtrl", ($scope) ->
   $scope.loadPouch = loadPouch = ->
     db = new PouchDB currentListName
     updateModel()
-    pull()
 
-  push = ->
-    db.compact (err, res) ->
-      db.replicate.to "http://yankee.davidbanham.com:5984/#{currentListName}",
-        continuous: true
-        create_target: true
-        onChange: updateModel
-
-  pull = ->
-    db.replicate.from "http://yankee.davidbanham.com:5984/#{currentListName}",
-      continuous: true
-      onChange: updateModel
+    PouchDB.sync(currentListName, "http://yankee.davidbanham.com:5984/#{currentListName}", {
+      live: true
+      retry: true
+    }).on 'change', ->
+      updateModel()
+    .on 'paused', ->
+      $scope.loading = false
+    .on 'active', ->
+      $scope.loading = true
+    .on 'denied', (info) ->
+      alert("Permission denied! #{info}")
+    .on 'complete', (info) ->
+      $scope.loading = false
+    .on 'error', (err) ->
+      alert("error! #{err.message}")
 
   updateModel = ->
     db.allDocs {include_docs: true}, (err, res) ->
@@ -63,14 +66,12 @@ app.controller "ListCtrl", ($scope) ->
       db.post {name: elem}, (err, res) ->
         console.error err if err?
         updateModel()
-        push()
 
   $scope.deleteItem = (item) ->
     db.remove item, (err, res) ->
       console.error "error deleting item", item, err if err?
       delete items[item._id]
       updateModel()
-      push()
 
   $scope.resetList = ->
     for id, item of items
@@ -79,7 +80,6 @@ app.controller "ListCtrl", ($scope) ->
           console.error "error deleting item", item, err if err?
           delete items[id]
           updateModel() if Object.keys(items).length is 0
-          push() if Object.keys(items).length is 0
 
   loadPouch()
 
@@ -87,8 +87,3 @@ app.controller "ListCtrl", ($scope) ->
     checkHash()
     loadPouch()
     $scope.$apply()
-
-  window.addEventListener 'online', ->
-    console.log 'back online'
-    pull()
-    push()

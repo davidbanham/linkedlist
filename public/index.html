@@ -23,7 +23,7 @@
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="../assets/ico/favicon.png">
   </head>
-  <body>
+  <body ng-controller="ListCtrl">
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -32,7 +32,7 @@
       </div>
     </div>
   </div>
-    <div class="container" ng-controller="ListCtrl">
+    <div class="container">
       <div class="row">
         <div class="col-md-6">
           <h3 contenteditable="" ng-model="currentListName" stripBr=""> </h3>

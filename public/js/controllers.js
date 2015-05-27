@@ -6,7 +6,7 @@
   db = 'supermarket';
 
   app.controller("ListCtrl", function($scope) {
-    var checkHash, chooseDb, currentListName, debounce, items, loadPouch, pull, push, updateHash, updateModel;
+    var checkHash, chooseDb, currentListName, debounce, items, loadPouch, updateHash, updateModel;
     currentListName = 'supermarket';
     $scope.chooseDb = chooseDb = function(name) {
       $scope.currentListName = currentListName = name;
@@ -37,21 +37,21 @@
     $scope.loadPouch = loadPouch = function() {
       db = new PouchDB(currentListName);
       updateModel();
-      return pull();
-    };
-    push = function() {
-      return db.compact(function(err, res) {
-        return db.replicate.to("http://yankee.davidbanham.com:5984/" + currentListName, {
-          continuous: true,
-          create_target: true,
-          onChange: updateModel
-        });
-      });
-    };
-    pull = function() {
-      return db.replicate.from("http://yankee.davidbanham.com:5984/" + currentListName, {
-        continuous: true,
-        onChange: updateModel
+      return PouchDB.sync(currentListName, "http://yankee.davidbanham.com:5984/" + currentListName, {
+        live: true,
+        retry: true
+      }).on('change', function() {
+        return updateModel();
+      }).on('paused', function() {
+        return $scope.loading = false;
+      }).on('active', function() {
+        return $scope.loading = true;
+      }).on('denied', function(info) {
+        return alert("Permission denied! " + info);
+      }).on('complete', function(info) {
+        return $scope.loading = false;
+      }).on('error', function(err) {
+        return alert("error! " + err.message);
       });
     };
     updateModel = function() {
@@ -84,8 +84,7 @@
           if (err != null) {
             console.error(err);
           }
-          updateModel();
-          return push();
+          return updateModel();
         }));
       }
       return _results;
@@ -96,8 +95,7 @@
           console.error("error deleting item", item, err);
         }
         delete items[item._id];
-        updateModel();
-        return push();
+        return updateModel();
       });
     };
     $scope.resetList = function() {
@@ -112,10 +110,7 @@
             }
             delete items[id];
             if (Object.keys(items).length === 0) {
-              updateModel();
-            }
-            if (Object.keys(items).length === 0) {
-              return push();
+              return updateModel();
             }
           });
         })(id, item));
@@ -128,11 +123,6 @@
       loadPouch();
       return $scope.$apply();
     };
-    return window.addEventListener('online', function() {
-      console.log('back online');
-      pull();
-      return push();
-    });
   });
 
 }).call(this);

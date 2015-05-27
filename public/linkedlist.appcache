@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Sun 2 Mar 2014 4
+# Wed 27 May 2015 4
 
 CACHE:
 index.html
@@ -9,7 +9,7 @@ css/custom.css
 lib/angular/angular.min.js
 js/app.js
 js/controllers.js
-js/pouchdb-nightly.min.js
+js/pouchdb-3.4.0.min.js
 
 NETWORK:
 *

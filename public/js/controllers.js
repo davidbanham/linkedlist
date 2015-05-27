@@ -36,7 +36,9 @@
     items = {};
     $scope.items = items;
     $scope.loadPouch = loadPouch = function() {
-      db = new PouchDB(currentListName);
+      db = new PouchDB(currentListName, {
+        auto_compaction: true
+      });
       updateModel();
       return PouchDB.sync(currentListName, "http://yankee.davidbanham.com:5984/" + currentListName, {
         live: true,

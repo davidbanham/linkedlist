@@ -32,7 +32,8 @@ app.controller "ListCtrl", ($scope) ->
   $scope.items = items
 
   $scope.loadPouch = loadPouch = ->
-    db = new PouchDB currentListName
+    db = new PouchDB currentListName,
+      auto_compaction: true
     updateModel()
 
     PouchDB.sync(currentListName, "http://yankee.davidbanham.com:5984/#{currentListName}", {
